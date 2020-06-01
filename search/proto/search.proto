@@ -1,0 +1,16 @@
+syntax = "proto3";
+package search;
+
+service SearchDocuments {
+  rpc simpleSearch(SearchDocumentsRequest) returns (SearchDocumentsResponse) {}
+}
+
+message SearchDocumentsRequest {
+  repeated string searchTerms = 1;
+  string index = 2;
+  int32 fuzziness = 3;
+  repeated string fields = 4;
+  string userId = 5;
+}
+
+message SearchDocumentsResponse { repeated string ids = 1; }

@@ -1,0 +1,14 @@
+syntax = "proto3";
+package ocr;
+
+service TextDetector {
+  rpc detect(TextDetectionRequest) returns (JSONResponse) {}
+}
+
+message TextDetectionRequest {
+  string filename = 1;
+  bytes data = 2;
+}
+
+message TextDetectionResponse { string jsonString = 1; }
+message JSONResponse { string jsonString = 1; }

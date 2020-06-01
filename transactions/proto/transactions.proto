@@ -1,0 +1,51 @@
+syntax = "proto3";
+package transactions;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/struct.proto";
+
+service Transactions {
+  rpc GetManyTransactions(GetManyTransactionsRequest)
+      returns (stream JSONResponse) {}
+  rpc GetAllTransactions(GetAllTransactionsRequest)
+      returns (stream JSONResponse) {}
+  rpc GetTransactionsMetrics(GetTransactionsMetricsRequest)
+      returns (TransactionsMetricsResponse) {}
+  rpc GetMatchesReport(GetMatchesReportRequest)
+      returns (MatchesReportResponse) {}
+}
+
+message GetAllTransactionsRequest {
+  string userId = 1;
+  int32 skip = 2;
+  int32 limit = 3;
+  repeated string fields = 4;
+}
+
+message GetManyTransactionsRequest {
+  string userId = 1;
+  repeated string transactionIds = 2;
+  repeated string fields = 3;
+}
+
+message JSONResponse { string jsonString = 1; }
+
+message GetTransactionsMetricsRequest {
+  google.protobuf.Timestamp startDate = 1;
+  google.protobuf.Timestamp endDate = 2;
+  string userId = 3;
+}
+
+message TransactionsMetricsResponse {
+  int32 total = 1;
+  int32 matched = 2;
+  int32 matched_all_fields = 3;
+}
+
+message GetMatchesReportRequest {
+  google.protobuf.Timestamp startDate = 1;
+  google.protobuf.Timestamp endDate = 2;
+  string userId = 3;
+}
+
+message MatchesReportResponse { bytes data = 1; }
